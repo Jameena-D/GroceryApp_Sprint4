@@ -6,6 +6,7 @@ using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace Grocery.App.ViewModels
 {
@@ -97,10 +98,12 @@ namespace Grocery.App.ViewModels
         [RelayCommand]
         public void IncreaseAmount(int productId)
         {
+            System.Diagnostics.Debug.WriteLine($"Increase tapped: {productId}");
             GroceryListItem? item = MyGroceryListItems.FirstOrDefault(x => x.ProductId == productId);
             if (item == null) return;
             if (item.Amount >= item.Product.Stock) return;
             item.Amount++;
+            Debug.WriteLine(item.Amount);
             _groceryListItemsService.Update(item);
             item.Product.Stock--;
             _productService.Update(item.Product);
@@ -110,10 +113,12 @@ namespace Grocery.App.ViewModels
         [RelayCommand]
         public void DecreaseAmount(int productId)
         {
+            System.Diagnostics.Debug.WriteLine($"Decrease tapped: {productId}");
             GroceryListItem? item = MyGroceryListItems.FirstOrDefault(x => x.ProductId == productId);
             if (item == null) return;
             if (item.Amount <= 0) return;
             item.Amount--;
+            Debug.WriteLine(item.Amount);
             _groceryListItemsService.Update(item);
             item.Product.Stock++;
             _productService.Update(item.Product);
