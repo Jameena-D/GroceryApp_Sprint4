@@ -11,13 +11,29 @@ Vereist aanvulling:
 ## UC13 Klanten tonen per product  
 Deze UC toont de klanten die een bepaald product hebben gekocht:  
 - Maak enum Role met als waarden None en Admin.  
-- Geef de Client class een property Role metb als type de enum Role. De default waarde is None.  
+- Geef de Client class een property Role met als type de enum Role. De default waarde is None.  
 - In Client Repo koppel je de rol Role.Admin aan user3 (= admin).
 - In BoughtProductsService werk je de Get(productid) functie uit zodat alle Clients die product met productid hebben gekocht met client, boodschappenlijst en product in de lijst staan die wordt geretourneerd.  
-- In BoughtProductsView moet de naam van de Client ewn de naam van de Boodschappenlijst worden getoond in de CollectionView.  
+- In BoughtProductsView moet de naam van de Client en de naam van de Boodschappenlijst worden getoond in de CollectionView.  
 - In BoughtProductsViewModel de OnSelectedProductChanged uitwerken zodat bij een ander product de lijst correct wordt gevuld.  
 - In GroceryListViewModel maak je de methode ShowBoughtProducts(). Als de Client de rol admin heeft dan navigeer je naar BoughtProductsView. Anders doe je niets.  
 - In GroceryListView voeg je een ToolbarItem toe met als binding Client.Name en als Command ShowBoughtProducts.  
 
+## Gitflow
+Ik heb de gitflow methode gebruikt voor het werken met git.
 
+## Branches
+- main: bevat de laatste stabiele versie van de app.
+- develop: bevat de laatste ontwikkelversie van de app.
+- feature/uc(numer & naam): bevat de code voor een nieuwe feature.
+- feature branches worden na aforonding terug gemerged naar develop en worden verwijderd
+- hotfix/naam): bevat de code voor een bugfix.
+
+## Taalconcepten MVVM
+
+- De ViewModel bevat de logica en data voor de View.
+- De View bevat de UI en bindt aan de ViewModel.
+- De Model bevat de data en logica voor de app.
+- Domeinlogica is ondergebracht in de services die data ophalen via Repositories.
+- Admin.Role is een enum die de rol van een gebruiker aangeeft.
   
