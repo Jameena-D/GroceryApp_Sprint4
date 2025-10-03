@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Grocery.App.ViewModels
 {
@@ -10,11 +12,17 @@ namespace Grocery.App.ViewModels
     {
         public ObservableCollection<GroceryList> GroceryLists { get; set; }
         private readonly IGroceryListService _groceryListService;
+        private readonly GlobalViewModel _globalViewModel;
 
-        public GroceryListViewModel(IGroceryListService groceryListService) 
+        [ObservableProperty]
+        string clientName = string.Empty;
+        public Client Client { get; private set; }
+
+        public GroceryListViewModel(IGroceryListService groceryListService, GlobalViewModel globalViewModel)
         {
             Title = "Boodschappenlijst";
             _groceryListService = groceryListService;
+            _globalViewModel = globalViewModel;
             GroceryLists = new(_groceryListService.GetAll());
         }
 
@@ -28,12 +36,26 @@ namespace Grocery.App.ViewModels
         {
             base.OnAppearing();
             GroceryLists = new(_groceryListService.GetAll());
+
+            Client = _globalViewModel.Client;
+            ClientName = Client?.Name ?? string.Empty;
+            OnPropertyChanged(nameof(Client));
         }
 
         public override void OnDisappearing()
         {
             base.OnDisappearing();
             GroceryLists.Clear();
+        }
+        [RelayCommand]
+        public async Task ShowBoughtProducts()
+        {
+            Debug.WriteLine("ShowBoughtProdcuts gestart....");
+            if (_globalViewModel.Client.Role == Role.Admin)
+            {
+                Debug.WriteLine("Admin heeft ingelogd...");
+                await Shell.Current.GoToAsync(nameof(Views.BoughtProductsView));
+            }
         }
     }
 }

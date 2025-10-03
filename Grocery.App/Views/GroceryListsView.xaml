@@ -7,8 +7,12 @@
              x:DataType="vm:GroceryListViewModel"
              Title="GroceryListsView">
     <Shell.TitleView>
-        <Grid>
-            <Label Text="Boodschappenlijsten" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
+        <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center" Padding="0,4">
+            <Label Grid.Column="0" Text="Boodschappenlijsten" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="{Binding Client.Name}"
+                    Command="{Binding ShowBoughtProductsCommand}"
+                    Padding="8,4" />
         </Grid>
     </Shell.TitleView>
 
