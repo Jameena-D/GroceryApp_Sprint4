@@ -27,7 +27,7 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
-        private void Login()
+        private async void Login()
         {
             Client? authenticatedClient = _authService.Login(Email, Password);
             if (authenticatedClient != null)
